@@ -14,3 +14,6 @@ personal qmk keymap for an atreus62 board setup to be used as a git submodule.
 
 ### Figuring out what dev port your board is on
 * https://github.com/technomancy/tmk_keyboard/blob/atreus/keyboard/atreus/README.md#uploading-on-debianmac
+
+### Updating
+* Make changes in this repo, push and on the local QMK repo, run `git pull --recurse-submodules`

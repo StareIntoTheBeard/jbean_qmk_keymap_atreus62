@@ -3,7 +3,7 @@
 personal qmk keymap for an atreus62 board setup to be used as a git submodule.
 
 ### Setup
-* Pull QMK
+* Pull [QMK](https://github.com/qmk/qmk_firmware)
 * Follow the [quick start](https://github.com/technomancy/tmk_keyboard/blob/atreus/keyboard/atreus/README.md#quick-start) guide 
 * in `keyboards/atreus62/keymaps` run `git submodule add https://github.com/StareIntoTheBeard/jbean_qmk_keymap_atreus62.git`
 * run `git submodule init`

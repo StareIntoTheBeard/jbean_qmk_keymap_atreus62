@@ -3,6 +3,12 @@
 
 #include "atreus62.h"
 
+enum emoticons {
+	DISFACE  = SAFE_RANGE,
+	SHRUG,
+	TFLIP
+};
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -13,7 +19,6 @@
 #define _SERVER 2
 #define _RESET 3
 
-
 //Tap Dance Declarations
 enum {
 	TD_NEXT_PV = 0,
@@ -21,11 +26,6 @@ enum {
 	TD_BRACES = 2,
 };
 
-enum emoticons {
-	DISFACE = SAFE_RANGE,
-	SHRUG,
-	TFLIP
-};
 
 
 void tap(uint16_t keycode){
@@ -46,11 +46,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[_DEFAULT] = { /* qwerty */
-		{ KC_ESC,   KC_1,    KC_2,    KC_3,    KC_4,     KC_5,    KC_TRNS,     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS },
-		{ KC_BSLS,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,    KC_TRNS,     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BRACES) },
-		{ KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,     KC_G,    KC_TRNS,     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT },
-		{ KC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,    MO(_SERVER), KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC },
-		{ KC_LCTL,  KC_LALT, KC_GRV,  KC_LGUI, TT(_NAV), KC_BSPC, KC_ENT,      KC_SPC,  KC_EQL,  KC_MINS, KC_QUOT, KC_ENT,  KC_RGUI }
+		{ KC_ESC,   KC_1,    KC_2,    KC_3,    KC_4,     KC_5,    KC_TRNS,     KC_6,    KC_7,         KC_8,    KC_9,    KC_0,    KC_MINS },
+		{ KC_BSLS,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,    KC_TRNS,     KC_Y,    KC_U,         KC_I,    KC_O,    KC_P,    TD(TD_BRACES) },
+		{ KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,     KC_G,    KC_TRNS,     KC_H,    KC_J,         KC_K,    KC_L,    KC_SCLN, KC_QUOT },
+		{ KC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,    KC_ENT,      KC_N,    KC_M,         KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC },
+		{ KC_LCTL,  KC_LALT, KC_GRV,  KC_LGUI, TT(_NAV), KC_BSPC, KC_ENT,      KC_SPC,  TT(_SERVER),  KC_MINS, KC_EQL,  LGUI(KC_Z),  LSFT(LGUI(KC_Z)) }
 	},
 	
 	[_NAV] = { 
@@ -62,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	},
 	
 	[_SERVER] = {
-		{ KC_TRNS,  M(1),    M(2),                M(3),          KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,  KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,  KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,  KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,  KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,  KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,  DISFACE, SHRUG,               TFLIP,         KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
+		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,  KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,  KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       DISFACE, SHRUG,               TFLIP,         KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
 	},
 	
 	[_RESET] = {

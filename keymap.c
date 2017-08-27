@@ -228,6 +228,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		if(record->event.pressed){
 			SEND_STRING("git commit -m ''"); 
 			tap(KC_LEFT);
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -241,18 +243,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case AMEND: 
 		if(record->event.pressed){
 			SEND_STRING("git commit --amend \n"); 
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
 		case VI_SAVE: 
 		if(record->event.pressed){
 			SEND_STRING(":wq \n"); 
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
 		case VI_EXIT: 
 		if(record->event.pressed){
 			SEND_STRING(":q! \n"); 
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -264,7 +272,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		break;
 		case PUSH: 
 		if(record->event.pressed){
-			SEND_STRING("git name-rev --name-only HEAD | git push origin $arg \n"); 
+			SEND_STRING("git name-rev --name-only HEAD | git push origin $arg \n");
+			layer_on(_DEFAULT); 
+			layer_off(_MACROS);
 		}
 		return false;
 		break;

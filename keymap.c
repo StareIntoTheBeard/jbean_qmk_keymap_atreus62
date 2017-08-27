@@ -6,7 +6,15 @@
 enum emoticons {
 	DISFACE  = SAFE_RANGE,
 	SHRUG,
-	TFLIP
+	TFLIP,
+	ADD,
+	COMMIT,
+	STATUS,
+	AMEND,
+	PUSH,
+	PULL,
+	VI_SAVE,
+	VI_EXIT,
 };
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
@@ -17,7 +25,8 @@ enum emoticons {
 #define _DEFAULT 0
 #define _NAV 1
 #define _SERVER 2
-#define _RESET 3
+#define _MACROS 3
+#define _RESET 4
 
 //Tap Dance Declarations
 enum {
@@ -58,15 +67,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		{ TD(TD_VOLD_MT),   KC_F12,  KC_UP,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,    KC_TRNS,       KC_MS_U,       KC_RBRC,    KC_VOLU    },
 		{ KC_MPLY,          KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN1, KC_MS_L,       KC_MS_D,       KC_MS_R,    TD(TD_NEXT_PV)    },
 		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN2, LGUI(KC_LBRC), LGUI(KC_RBRC), KC_TRNS,    KC_TRNS    },
-		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,    KC_TRNS,       KC_TRNS,       TO(_RESET), LALT(LGUI(KC_POWER))   }
+		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, MO(_MACROS),KC_TRNS,       KC_TRNS,       TO(_RESET), LALT(LGUI(KC_POWER))   }
 	},
 	
 	[_SERVER] = {
-		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          M(4),    KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,  KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,  KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       DISFACE, SHRUG,               TFLIP,         KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
+		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
+	},
+	
+	[_MACROS] = {
+		{ TO(_DEFAULT),  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,  VI_EXIT, VI_SAVE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ PULL,     ADD,     COMMIT,  AMEND,   STATUS, PUSH, KC_TRNS,  KC_TRNS, DISFACE, SHRUG,   TFLIP,   KC_TRNS, KC_TRNS },
+		{ KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
 	},
 	
 	[_RESET] = {
@@ -76,7 +93,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		{ KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   },
 		{ KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , RESET }
 	}
-	
 	/*
 	[_TRNS] = {
 		{ KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
@@ -125,6 +141,15 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		case 3:
 		if (record->event.pressed) {
 			SEND_STRING("iex -S mix"); 
+			return MACRO(T(ENT), END);
+		}
+		else {
+			return false;
+		}
+		break;
+		case 4:
+		if (record->event.pressed) {
+			SEND_STRING("mix test"); 
 			return MACRO(T(ENT), END);
 		}
 		else {
@@ -188,6 +213,58 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			unregister_code(KC_LSFT);
 			tap(KC_SLSH);									// Arm
 			process_unicode((0x00AF|QK_UNICODE), record);	// Hand
+		}
+		return false;
+		break;
+
+		case ADD: 
+		if(record->event.pressed){
+			SEND_STRING("git add .\n"); 
+		}
+		return false;
+		break;
+		
+		case COMMIT: 
+		if(record->event.pressed){
+			SEND_STRING("git commit -m ''"); 
+			tap(KC_LEFT);
+		}
+		return false;
+		break;
+		
+		case STATUS: 
+		if(record->event.pressed){
+			SEND_STRING("git status \n"); 
+		}
+		return false;
+		break;
+		case AMEND: 
+		if(record->event.pressed){
+			SEND_STRING("git commit --amend \n"); 
+		}
+		return false;
+		break;
+		case VI_SAVE: 
+		if(record->event.pressed){
+			SEND_STRING(":wq \n"); 
+		}
+		return false;
+		break;
+		case VI_EXIT: 
+		if(record->event.pressed){
+			SEND_STRING(":q! \n"); 
+		}
+		return false;
+		break;
+		case PULL: 
+		if(record->event.pressed){
+			SEND_STRING("git name-rev --name-only HEAD | git pull origin $arg \n"); 
+		}
+		return false;
+		break;
+		case PUSH: 
+		if(record->event.pressed){
+			SEND_STRING("git name-rev --name-only HEAD | git push origin $arg \n"); 
 		}
 		return false;
 		break;

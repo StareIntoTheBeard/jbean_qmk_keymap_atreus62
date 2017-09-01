@@ -1,0 +1,12 @@
+#!/bin/sh
+HL="${HID_LISTEN:-/usr/local/bin/hid_listen.mac}"
+
+sudo "${HL}" | grep --line-buffered LAYER: | \
+(while read line; do
+     case $line in
+         LAYER:*)
+             layer="$(echo $(echo $line | cut -d: -f2-))"
+             notify "Switched to layer: $layer"
+             ;;
+     esac
+ done)

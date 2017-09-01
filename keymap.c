@@ -2,6 +2,7 @@
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
 
 #include "atreus62.h"
+#include <stdlib.h>
 
 enum emoticons {
 	DISFACE  = SAFE_RANGE,
@@ -33,6 +34,7 @@ enum {
 	TD_NEXT_PV = 0,
 	TD_VOLD_MT = 1,
 	TD_BRACES = 2,
+	TD_CAPS = 3
 };
 
 
@@ -50,7 +52,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 	//Tap once for Volume Down, twice for Mute
 	[TD_VOLD_MT]  = ACTION_TAP_DANCE_DOUBLE(KC_VOLD, KC_MUTE),
 	//Tap once for Left Brace, twice for Right Brace
-	[TD_BRACES]  = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC)
+	[TD_BRACES]  = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
+	[TD_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_RSFT, KC_CAPS)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -58,18 +61,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		{ KC_ESC,   KC_1,    KC_2,    KC_3,    KC_4,     KC_5,    KC_TRNS,     KC_6,    KC_7,         KC_8,    KC_9,    KC_0,    KC_MINS },
 		{ KC_BSLS,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,    KC_TRNS,     KC_Y,    KC_U,         KC_I,    KC_O,    KC_P,    TD(TD_BRACES) },
 		{ KC_TAB,   KC_A,    KC_S,    KC_D,    KC_F,     KC_G,    KC_TRNS,     KC_H,    KC_J,         KC_K,    KC_L,    KC_SCLN, KC_QUOT },
-		{ KC_LSPO,  KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,    KC_ENT,      KC_N,    KC_M,         KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC },
+		{ KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,    KC_ENT,      KC_N,    KC_M,         KC_COMM, KC_DOT,  KC_SLSH, TD(TD_CAPS) },
 		{ KC_LCTL,  KC_LALT, KC_GRV,  KC_LGUI, TT(_NAV), KC_BSPC, KC_ENT,      KC_SPC,  LT(_SERVER, KC_NO),  KC_MINS, KC_EQL,  LGUI(KC_Z),  LSFT(LGUI(KC_Z)) }
 	},
-	
-	[_NAV] = { 
+
+	[_NAV] = {
 		{ TO(_DEFAULT),     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,  KC_F6,   KC_F7,      KC_F8,         KC_F9,         KC_F10,     KC_F11     },
 		{ TD(TD_VOLD_MT),   KC_F12,  KC_UP,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,    KC_TRNS,       KC_MS_U,       KC_RBRC,    KC_VOLU    },
 		{ KC_MPLY,          KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN1, KC_MS_L,       KC_MS_D,       KC_MS_R,    TD(TD_NEXT_PV)    },
 		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN2, LGUI(KC_LBRC), LGUI(KC_RBRC), KC_TRNS,    KC_TRNS    },
 		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, MO(_MACROS) ,KC_TRNS,       KC_TRNS,       TO(_RESET), LALT(LGUI(KC_POWER))   }
 	},
-	
+
 	[_SERVER] = {
 		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          M(4),    KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,  KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
@@ -77,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
 	},
-	
+
 	[_MACROS] = {
 		{ TO(_DEFAULT),  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,  VI_EXIT, VI_SAVE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
@@ -85,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		{ KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS }
 	},
-	
+
 	[_RESET] = {
 		{ TO(_DEFAULT),  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   },
 		{ KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,  KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO   },
@@ -105,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-	
+
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -122,7 +125,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		break;
 		case 1:
 		if (record->event.pressed) {
-			SEND_STRING("cd ~/Projects/workforce/workforce_umbrella"); 
+			SEND_STRING("cd ~/Projects/workforce/workforce_umbrella");
 			return MACRO(T(ENT), END);
 		}
 		else {
@@ -131,7 +134,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		break;
 		case 2:
 		if (record->event.pressed) {
-			SEND_STRING("mix phx.server"); 
+			SEND_STRING("mix phx.server");
 			return MACRO(T(ENT), END);
 		}
 		else {
@@ -140,7 +143,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		break;
 		case 3:
 		if (record->event.pressed) {
-			SEND_STRING("iex -S mix"); 
+			SEND_STRING("iex -S mix");
 			return MACRO(T(ENT), END);
 		}
 		else {
@@ -149,7 +152,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 		break;
 		case 4:
 		if (record->event.pressed) {
-			SEND_STRING("mix test"); 
+			SEND_STRING("mix test");
 			return MACRO(T(ENT), END);
 		}
 		else {
@@ -159,6 +162,19 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 	}
 	return MACRO_NONE;
 };
+
+void matrix_scan_user(void) {
+  static uint32_t prev_layer_state;
+  uint8_t layer = biton32(layer_state);
+  static char *layer_lookup[] = {"Default", "Nav", "Server", "Macros", "Reset"};
+
+  if (layer_state != prev_layer_state) {
+    prev_layer_state = layer_state;
+		if (layer_lookup[layer])
+      xprintf("LAYER: %s\n", layer_lookup[layer]);
+  }
+}
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
@@ -196,7 +212,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		}
 		return false;
 		break;
-		
+
 		case SHRUG:			// ¯\_(ツ)_/¯
 		if(record->event.pressed){
 			set_unicode_input_mode(UC_OSX);
@@ -217,63 +233,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		return false;
 		break;
 
-		case ADD: 
+		case ADD:
 		if(record->event.pressed){
-			SEND_STRING("git add .\n"); 
+			SEND_STRING("git add .\n");
 		}
 		return false;
 		break;
-		
-		case COMMIT: 
+
+		case COMMIT:
 		if(record->event.pressed){
-			SEND_STRING("git commit -m ''"); 
+			SEND_STRING("git commit -m ''");
 			tap(KC_LEFT);
 			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}
 		return false;
 		break;
-		
-		case STATUS: 
+
+		case STATUS:
 		if(record->event.pressed){
-			SEND_STRING("git status \n"); 
+			SEND_STRING("git status \n");
 		}
 		return false;
 		break;
-		case AMEND: 
+		case AMEND:
 		if(record->event.pressed){
-			SEND_STRING("git commit --amend \n"); 
+			SEND_STRING("git commit --amend \n");
 			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}
 		return false;
 		break;
-		case VI_SAVE: 
+		case VI_SAVE:
 		if(record->event.pressed){
-			SEND_STRING(":wq \n"); 
+			SEND_STRING(":wq \n");
 			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}
 		return false;
 		break;
-		case VI_EXIT: 
+		case VI_EXIT:
 		if(record->event.pressed){
-			SEND_STRING(":q! \n"); 
+			SEND_STRING(":q! \n");
 			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}
 		return false;
 		break;
-		case PULL: 
+		case PULL:
 		if(record->event.pressed){
-			SEND_STRING("git name-rev --name-only HEAD | git pull origin $arg \n"); 
+			SEND_STRING("git name-rev --name-only HEAD | git pull origin $arg \n");
 		}
 		return false;
 		break;
-		case PUSH: 
+		case PUSH:
 		if(record->event.pressed){
 			SEND_STRING("git name-rev --name-only HEAD | git push origin $arg \n");
-			layer_on(_DEFAULT); 
+			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}
 		return false;
@@ -281,5 +297,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	}
 	return true;
 };
-
-

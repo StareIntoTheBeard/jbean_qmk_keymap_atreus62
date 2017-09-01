@@ -166,7 +166,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 void matrix_scan_user(void) {
   static uint32_t prev_layer_state;
   uint8_t layer = biton32(layer_state);
-  static char *layer_lookup[] = {"Default", "Nav", "Server", "Macros", "Reset"};
+  static char *layer_lookup[] = {"Default", "Nav/Media", "Server/Editor/Numpad", "vi/Git/Emojis", "Reset"};
 
   if (layer_state != prev_layer_state) {
     prev_layer_state = layer_state;

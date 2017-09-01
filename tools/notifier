@@ -1,7 +1,7 @@
 #!/bin/sh
 HL="${HID_LISTEN:-/usr/local/bin/hid_listen.mac}"
 
-sudo "${HL}" | grep --line-buffered LAYER: | \
+"${HL}" | grep --line-buffered LAYER: | \
 (while read line; do
      case $line in
          LAYER:*)

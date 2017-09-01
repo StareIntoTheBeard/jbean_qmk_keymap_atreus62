@@ -6,7 +6,7 @@ HL="${HID_LISTEN:-/usr/local/bin/hid_listen.mac}"
      case $line in
          LAYER:*)
              layer="$(echo $(echo $line | cut -d: -f2-))"
-             notify "Switched to layer: $layer"
+             osascript -e "display notification \"$layer\""
              ;;
      esac
  done)

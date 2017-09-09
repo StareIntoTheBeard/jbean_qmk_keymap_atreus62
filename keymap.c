@@ -184,6 +184,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			tap(KC_MINS);
 			unregister_code(KC_RSFT);
 			process_unicode((0x0CA0|QK_UNICODE), record);   // Eye
+
 		}
 		return false;
 		break;
@@ -195,6 +196,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			tap(KC_Z);
 			unregister_code(KC_RGUI);
 			unregister_code(KC_RSFT);
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -218,6 +221,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				process_unicode((0x253B|QK_UNICODE), record);   // Table
 				process_unicode((0x2501|QK_UNICODE), record);   // Table
 				process_unicode((0x253B|QK_UNICODE), record);   // Table
+				layer_on(_DEFAULT);
+				layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -238,6 +243,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			unregister_code(KC_LSFT);
 			tap(KC_SLSH);									// Arm
 			process_unicode((0x00AF|QK_UNICODE), record);	// Hand
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;

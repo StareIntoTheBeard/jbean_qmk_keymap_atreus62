@@ -1,0 +1,12 @@
+#!/bin/sh
+HL="${HID_LISTEN:-/usr/local/bin/hid_listen.mac}"
+
+"${HL}" | grep --line-buffered LAYER: | \
+(while read line; do
+     case $line in
+         LAYER:*)
+             layer="$(echo $(echo $line | cut -d: -f2-))"
+             osascript -e "display notification \"$layer\""
+             ;;
+     esac
+ done)

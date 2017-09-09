@@ -38,8 +38,6 @@ enum {
 	TD_CAPS = 3
 };
 
-
-
 void tap(uint16_t keycode){
 	register_code(keycode);
 	unregister_code(keycode);
@@ -66,19 +64,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	},
 
 	[_NAV] = {
-		{ TO(_DEFAULT),     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,  KC_F6,   KC_F7,      KC_F8,         KC_F9,         KC_F10,     KC_F11     },
-		{ TD(TD_VOLD_MT),   KC_F12,  KC_UP,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS,    KC_TRNS,       KC_MS_U,       KC_RBRC,    KC_VOLU    },
-		{ KC_MPLY,          KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN1, KC_MS_L,       KC_MS_D,       KC_MS_R,    TD(TD_NEXT_PV)    },
-		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_MS_BTN2, LGUI(KC_LBRC), LGUI(KC_RBRC), KC_TRNS,    KC_TRNS    },
-		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, MO(_MACROS),KC_TRNS,       KC_TRNS,       TO(_RESET), LALT(LGUI(KC_POWER))   }
+		{ TO(_DEFAULT),     KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,  KC_F6,       KC_F7,       KC_F8,         KC_F9,         KC_F10,     KC_F11     },
+		{ TD(TD_VOLD_MT),   KC_F12,  KC_UP,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,     KC_TRNS,     KC_TRNS,       KC_MS_U,       KC_RBRC,    KC_VOLU    },
+		{ KC_MPLY,          KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,     KC_MS_BTN1,  KC_MS_L,       KC_MS_D,       KC_MS_R,    TD(TD_NEXT_PV)    },
+		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,     KC_MS_BTN2,  LGUI(KC_LBRC), LGUI(KC_RBRC), KC_TRNS,    KC_TRNS    },
+		{ KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_NO,  KC_TRNS,     KC_TRNS,     KC_TRNS,       KC_TRNS,       TO(_RESET), LALT(LGUI(KC_POWER))   }
 	},
 
 	[_SERVER] = {
-		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          M(4),    KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,  KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,  KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,  KC_0,    KC_TRNS, KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS }
+		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          M(4),    KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,      KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,      KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,      KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, MO(_MACROS),  KC_0,    KC_TRNS, KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS }
 	},
 
 	[_MACROS] = {
@@ -247,6 +245,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case ADD:
 		if(record->event.pressed){
 			SEND_STRING("git add .\n");
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -264,6 +264,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case STATUS:
 		if(record->event.pressed){
 			SEND_STRING("git status \n");
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -294,12 +296,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case PULL:
 		if(record->event.pressed){
 			SEND_STRING("git name-rev --name-only HEAD | git pull origin $arg \n");
+			layer_on(_DEFAULT);
+			layer_off(_MACROS);
 		}
 		return false;
 		break;
 		case PUSH:
 		if(record->event.pressed){
-			SEND_STRING("git name-rev --name-only HEAD | git push origin $arg \n");
+			SEND_STRING("git name-rev --name-only HEAD | git push origin --set-upstream $arg \n");
 			layer_on(_DEFAULT);
 			layer_off(_MACROS);
 		}

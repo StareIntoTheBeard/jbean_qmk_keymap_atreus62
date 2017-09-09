@@ -43,6 +43,11 @@ void tap(uint16_t keycode){
 	unregister_code(keycode);
 };
 
+void back_to_default(void) {
+	layer_on(_DEFAULT);
+	layer_off(_MACROS);
+}
+
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
 	//Tap once for Next Track, twice for Previous
@@ -184,7 +189,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			tap(KC_MINS);
 			unregister_code(KC_RSFT);
 			process_unicode((0x0CA0|QK_UNICODE), record);   // Eye
-
+			back_to_default();
 		}
 		return false;
 		break;
@@ -196,8 +201,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			tap(KC_Z);
 			unregister_code(KC_RGUI);
 			unregister_code(KC_RSFT);
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
 		}
 		return false;
 		break;
@@ -221,8 +224,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				process_unicode((0x253B|QK_UNICODE), record);   // Table
 				process_unicode((0x2501|QK_UNICODE), record);   // Table
 				process_unicode((0x253B|QK_UNICODE), record);   // Table
-				layer_on(_DEFAULT);
-				layer_off(_MACROS);
+				back_to_default();
 		}
 		return false;
 		break;
@@ -243,8 +245,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			unregister_code(KC_LSFT);
 			tap(KC_SLSH);									// Arm
 			process_unicode((0x00AF|QK_UNICODE), record);	// Hand
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
@@ -252,8 +253,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case ADD:
 		if(record->event.pressed){
 			SEND_STRING("git add .\n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
@@ -262,8 +262,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		if(record->event.pressed){
 			SEND_STRING("git commit -m ''");
 			tap(KC_LEFT);
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
@@ -271,48 +270,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case STATUS:
 		if(record->event.pressed){
 			SEND_STRING("git status \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
 		case AMEND:
 		if(record->event.pressed){
 			SEND_STRING("git commit --amend \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
 		case VI_SAVE:
 		if(record->event.pressed){
 			SEND_STRING(":wq \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
 		case VI_EXIT:
 		if(record->event.pressed){
 			SEND_STRING(":q! \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
 		case PULL:
 		if(record->event.pressed){
 			SEND_STRING("git name-rev --name-only HEAD | git pull origin $arg \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;
 		case PUSH:
 		if(record->event.pressed){
 			SEND_STRING("git name-rev --name-only HEAD | git push origin --set-upstream $arg \n");
-			layer_on(_DEFAULT);
-			layer_off(_MACROS);
+			back_to_default();
 		}
 		return false;
 		break;

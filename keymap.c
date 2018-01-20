@@ -10,6 +10,8 @@ enum emoticons {
 	TFLIP,
 	ADD,
 	REDO,
+	COPY_UP,
+	COPY_DOWN,
 	COMMIT,
 	STATUS,
 	AMEND,
@@ -78,8 +80,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	[_SERVER] = {
 		{ TO(_DEFAULT),  M(1),    M(2),                M(3),          M(4),    KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_UP)),   LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,      KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
-		{ KC_TRNS,       KC_TRNS, LSFT(LALT(KC_DOWN)), LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,      KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, COPY_UP,             LALT(KC_UP),   KC_TRNS, KC_TRNS, KC_TRNS,      KC_7,    KC_8,    KC_9,    KC_TRNS, KC_TRNS, KC_TRNS },
+		{ KC_TRNS,       KC_TRNS, COPY_DOWN,           LALT(KC_DOWN), KC_TRNS, KC_TRNS, KC_TRNS,      KC_4,    KC_5,    KC_6,    KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,      KC_1,    KC_2,    KC_3,    KC_TRNS, KC_TRNS, KC_TRNS },
 		{ KC_TRNS,       KC_TRNS, KC_TRNS,             KC_TRNS,       KC_TRNS, KC_TRNS, MO(_MACROS),  KC_0,    KC_TRNS, KC_DOT,  KC_TRNS, KC_TRNS, KC_TRNS }
 	},
@@ -200,6 +202,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			register_code(KC_RGUI);
 			tap(KC_Z);
 			unregister_code(KC_RGUI);
+			unregister_code(KC_RSFT);
+		}
+		return false;
+		break;
+
+		case COPY_UP:
+		if(record->event.pressed){
+			register_code(KC_RSFT);
+			register_code(KC_RALT);
+			tap(KC_UP);
+			unregister_code(KC_RALT);
+			unregister_code(KC_RSFT);
+		}
+		return false;
+		break;
+
+		case COPY_DOWN:
+		if(record->event.pressed){
+			register_code(KC_RSFT);
+			register_code(KC_RALT);
+			tap(KC_DOWN);
+			unregister_code(KC_RALT);
 			unregister_code(KC_RSFT);
 		}
 		return false;
